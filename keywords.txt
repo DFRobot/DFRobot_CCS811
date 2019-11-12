@@ -1,0 +1,39 @@
+#######################################
+# Syntax Coloring DFRobot_CCS811
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+DFRobot_CCS811	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+getCO2PPM	KEYWORD2
+getTVOCPPB	KEYWORD2
+checkDataReady	KEYWORD2
+softReset	KEYWORD2
+setInTempHum	KEYWORD2
+setMeasCycle	KEYWORD2
+setMeasurementMode	KEYWORD2
+setThresholds	KEYWORD2
+getMeasurementMode	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+eMode0	LITERAL1
+eMode1	LITERAL1
+eMode2	LITERAL1
+eMode3	LITERAL1
+eMode4	LITERAL1
+eClosed	LITERAL1
+eCycle_1s	LITERAL1
+eCycle_10s	LITERAL1
+eCycle_60s	LITERAL1
+eCycle_250ms	LITERAL1
