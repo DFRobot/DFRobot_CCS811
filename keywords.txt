@@ -22,6 +22,8 @@ setMeasCycle	KEYWORD2
 setMeasurementMode	KEYWORD2
 setThresholds	KEYWORD2
 getMeasurementMode	KEYWORD2
+readBaseLine	KEYWORD2
+writeBaseLine	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

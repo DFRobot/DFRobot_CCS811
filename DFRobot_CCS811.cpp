@@ -24,6 +24,7 @@ int DFRobot_CCS811::begin(void)
 
     DBG("real sensor id=");DBG(id);
     if(id != CCS811_HW_ID){DBG("");
+        delay(1);
         return ERR_IC_VERSION;
     }
     writeReg(CCS811_BOOTLOADER_APP_START, NULL, 0);
