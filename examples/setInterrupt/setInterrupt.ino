@@ -8,7 +8,8 @@
  * @author [LuoYufeng](yufeng.luo@dfrobot.com)
  * @version  V1.0
  * @date  2019-07-13
- * @https://github.com/DFRobot/DFRobot_Sensor
+ * @get from https://www.dfrobot.com
+ * @url https://github.com/DFRobot/DFRobot_Sensor
  */
 #include "DFRobot_CCS811.h"
 

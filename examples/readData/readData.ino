@@ -8,7 +8,8 @@
  * @author [LuoYufeng](yufeng.luo@dfrobot.com)
  * @version  V0.1
  * @date  2019-07-19
- * @https://github.com/DFRobot/DFRobot_CCS811
+ * @get from https://www.dfrobot.com
+ * @url https://github.com/DFRobot/DFRobot_CCS811
  */
 #include "DFRobot_CCS811.h"
 
