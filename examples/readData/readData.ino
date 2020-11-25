@@ -54,7 +54,7 @@ void loop() {
      * @brief Set baseline
      * @param get from getBaseline.ino
      */
-    sensor.writeBaseLine(0x847B);
+    sensor.writeBaseLine(0x447B);
     //delay cannot be less than measurement cycle
     delay(1000);
 }
