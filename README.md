@@ -84,22 +84,17 @@ To use this library, first download the library file, paste it into the \Arduino
   
   /**
    * @brief Measurement parameter configuration 
-   * @param cycle:eClosed      :Idle (Measurements are disabled in this mode)
-   *              eCycle_1s    :Constant power mode, IAQ measurement every second
-   *              eCycle_10s   :Pulse heating mode IAQ measurement every 10 seconds
-   *              eCycle_60s   :Low power pulse heating mode IAQ measurement every 60 seconds
-   *              eCycle_250ms :Constant power mode, sensor measurement every 250ms 
+   * @param mode:in typedef enum{
+   *              eClosed,      //Idle (Measurements are disabled in this mode)
+   *              eCycle_1s,    //Constant power mode, IAQ measurement every second
+   *              eCycle_10s,   //Pulse heating mode IAQ measurement every 10 seconds
+   *              eCycle_60s,   //Low power pulse heating mode IAQ measurement every 60 seconds
+   *              eCycle_250ms  //Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
+   *          }eCycle_t;
+   * @param thresh:0 for Interrupt mode operates normally; 1 for interrupt mode only asserts the nINT signal (driven low) if the new
+   * @param interrupt:0 for Interrupt generation is disabled; 1 for the nINT signal is asserted (driven low) when a new sample is ready in
    */
-  void setMeasCycle(eCycle_t cycle);
-  /**
-   * @brief Measurement parameter configuration
-   * @param thresh:    0 for Interrupt mode operates normally; 
-   *                   1 for interrupt mode only asserts the nINT signal (driven low) if the new
-   * @param interrupt: 0 for Interrupt generation is disabled; 
-   *                   1 for the nINT signal is asserted (driven low) when a new sample is ready in
-   * @param mode:      in typedef enum eDRIVE_MODE_t
-   */
-  void setMeasurementMode(uint8_t thresh, uint8_t interrupt, eDRIVE_MODE_t mode);
+  setMeasurementMode(eCycle_t mode, uint8_t thresh = 0, uint8_t interrupt = 0),
   
   /**
    * @brief Get current parameter configuration 

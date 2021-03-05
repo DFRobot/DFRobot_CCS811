@@ -64,13 +64,6 @@ public:
     #define ERR_IC_VERSION    -2      //chip version mismatch
     
     uint8_t _deviceAddr;
-    typedef enum{
-        eMode0, //Idle (Measurements are disabled in this mode)
-        eMode1, //Constant power mode, IAQ measurement every second
-        eMode2, //Pulse heating mode IAQ measurement every 10 seconds
-        eMode3, //Low power pulse heating mode IAQ measurement every 60 seconds
-        eMode4  //Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
-    }eDRIVE_MODE_t;
     
     typedef enum{
         eClosed,      //Idle (Measurements are disabled in this mode)
@@ -107,16 +100,17 @@ public:
               setInTempHum(float temperature, float humidity),
               /**
                * @brief Measurement parameter configuration 
+               * @param mode:in typedef enum{
+               *              eClosed,      //Idle (Measurements are disabled in this mode)
+               *              eCycle_1s,    //Constant power mode, IAQ measurement every second
+               *              eCycle_10s,   //Pulse heating mode IAQ measurement every 10 seconds
+               *              eCycle_60s,   //Low power pulse heating mode IAQ measurement every 60 seconds
+               *              eCycle_250ms  //Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
+               *          }eCycle_t;
                * @param thresh:0 for Interrupt mode operates normally; 1 for interrupt mode only asserts the nINT signal (driven low) if the new
                * @param interrupt:0 for Interrupt generation is disabled; 1 for the nINT signal is asserted (driven low) when a new sample is ready in
-               * @param mode:in typedef enum eDRIVE_MODE_t
                */
-              setMeasurementMode(uint8_t thresh, uint8_t interrupt, eDRIVE_MODE_t mode),
-              /**
-               * @brief Measurement parameter configuration 
-               * @param mode:in typedef enum eDRIVE_MODE_t
-               */
-              setMeasCycle(eCycle_t cycle),
+              setMeasurementMode(eCycle_t mode, uint8_t thresh = 0, uint8_t interrupt = 0),
               /**
                * @brief Set interrupt thresholds 
                * @param lowToMed: interrupt triggered value in range low to middle 
@@ -128,7 +122,7 @@ public:
                * @return configuration code, needs to be converted into binary code to analyze
                *         The 2nd: Interrupt mode (if enabled) operates normally,1: Interrupt mode (if enabled) only asserts the nINT signal (driven low) if the new
                *         The 3rd: Interrupt generation is disabled,1: The nINT signal is asserted (driven low) when a new sample is ready in
-               *         The 4th: 6th: in typedef enum eDRIVE_MODE_t
+               *         The 4th: 6th: in typedef enum eCycle_t
                */
     uint8_t   getMeasurementMode();
 

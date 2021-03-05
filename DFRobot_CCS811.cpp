@@ -29,7 +29,7 @@ int DFRobot_CCS811::begin(void)
         return ERR_IC_VERSION;
     }
     writeReg(CCS811_BOOTLOADER_APP_START, NULL, 0);
-    setMeasurementMode(0,0,eMode4);
+    setMeasurementMode(eCycle_250ms,0,0);
     setInTempHum(25, 50);
     return ERR_OK;
 }
@@ -64,15 +64,9 @@ void DFRobot_CCS811::writeBaseLine(uint16_t baseLine){
     writeReg(CCS811_REG_BASELINE, buffer, 2);
 }
 
-void DFRobot_CCS811::setMeasurementMode(uint8_t thresh, uint8_t interrupt, eDRIVE_MODE_t mode){
+void DFRobot_CCS811::setMeasurementMode(eCycle_t mode, uint8_t thresh, uint8_t interrupt){
     uint8_t measurement[1] = {0};
     measurement[0] = (thresh << 2) | (interrupt << 3) | (mode << 4);
-    writeReg(CCS811_REG_MEAS_MODE, measurement, 1);
-}
-
-void DFRobot_CCS811::setMeasCycle(eCycle_t cycle){
-    uint8_t measurement[1] = {0};   
-    measurement[0] = cycle << 4;
     writeReg(CCS811_REG_MEAS_MODE, measurement, 1);
 }
 
