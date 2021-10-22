@@ -2,13 +2,12 @@
  * @file setInterrupt.ino
  * @brief Set interrupt parameter, when CO2 concentration range changes, get an interrupt
  * @n Experiment phenomenon: read data every 1s, and print it out on serial port.
- *
  * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
+ * @license     The MIT License (MIT)
  * @author [LuoYufeng](yufeng.luo@dfrobot.com)
+ * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V1.0
  * @date  2019-07-13
- * @get from https://www.dfrobot.com
  * @url https://github.com/DFRobot/DFRobot_Sensor
  */
 #include "DFRobot_CCS811.h"
@@ -31,22 +30,22 @@ void setup(void)
     }
     attachInterrupt(0, interrupt, RISING);
     /**
-     * @brief Measurement parameter configuration 
-     * @param mode:in typedef enum{
-     *              eClosed,      //Idle (Measurements are disabled in this mode)
-     *              eCycle_1s,    //Constant power mode, IAQ measurement every second
-     *              eCycle_10s,   //Pulse heating mode IAQ measurement every 10 seconds
-     *              eCycle_60s,   //Low power pulse heating mode IAQ measurement every 60 seconds
-     *              eCycle_250ms  //Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
-     *          }eCycle_t;
-     * @param thresh:0 for Interrupt mode operates normally; 1 for interrupt mode only asserts the nINT signal (driven low) if the new
-     * @param interrupt:0 for Interrupt generation is disabled; 1 for the nINT signal is asserted (driven low) when a new sample is ready in
+     * Measurement parameter configuration 
+     * mode:in typedef enum{
+     *       eClosed,      //Idle (Measurements are disabled in this mode)
+     *       eCycle_1s,    //Constant power mode, IAQ measurement every second
+     *       eCycle_10s,   //Pulse heating mode IAQ measurement every 10 seconds
+     *       eCycle_60s,   //Low power pulse heating mode IAQ measurement every 60 seconds
+     *       eCycle_250ms  //Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
+     *   }eCycle_t;
+     * thresh:0 for Interrupt mode operates normally; 1 for interrupt mode only asserts the nINT signal (driven low) if the new
+     * interrupt:0 for Interrupt generation is disabled; 1 for the nINT signal is asserted (driven low) when a new sample is ready in
      */
     CCS811.setMeasurementMode(CCS811.eCycle_250ms, 1, 1);
     /**
-     * @brief Set interrupt thresholds 
-     * @param lowToMed: interrupt triggered value in range low to middle 
-     * @param medToHigh: interrupt triggered value in range middle to high 
+     * Set interrupt thresholds 
+     * lowToMed: interrupt triggered value in range low to middle 
+     * medToHigh: interrupt triggered value in range middle to high 
      */
     CCS811.setThresholds(1500,2500);
 }

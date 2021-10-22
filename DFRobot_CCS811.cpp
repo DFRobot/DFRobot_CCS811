@@ -2,8 +2,9 @@
  * @file DFRobot_CCS811.cpp
  * @brief Define the basic structure of class DFRobot_CCS811
  * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
+ * @license     The MIT License (MIT)
  * @author [yufeng](yufeng.luo@dfrobot.com)
+ * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V1.0
  * @date  2019-07-13
  * @get from https://www.dfrobot.com

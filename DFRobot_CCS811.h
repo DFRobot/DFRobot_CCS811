@@ -2,8 +2,9 @@
  * @file DFRobot_CCS811.h
  * @brief Define the basic structure of class DFRobot_CCS811
  * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
+ * @license     The MIT License (MIT)
  * @author [yufeng](yufeng.luo@dfrobot.com)
+ * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V1.0
  * @date  2019-07-13
  * @get from https://www.dfrobot.com
@@ -65,160 +66,179 @@ public:
     
     uint8_t _deviceAddr;
     
-    typedef enum{
-        eClosed,      //Idle (Measurements are disabled in this mode)
-        eCycle_1s,    //Constant power mode, IAQ measurement every second
-        eCycle_10s,   //Pulse heating mode IAQ measurement every 10 seconds
-        eCycle_60s,   //Low power pulse heating mode IAQ measurement every 60 seconds
-        eCycle_250ms  //Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
-    }eCycle_t;
     /**
+     * @enum eCycle_t 
+     * @brief Measurement mode
+     */
+    typedef enum{
+        eClosed,      /**< Idle (Measurements are disabled in this mode) */
+        eCycle_1s,    /**< Constant power mode, IAQ measurement every second */
+        eCycle_10s,   /**< Pulse heating mode IAQ measurement every 10 seconds */
+        eCycle_60s,   /**< Low power pulse heating mode IAQ measurement every 60 seconds */
+        eCycle_250ms  /**< Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use) */
+    }eCycle_t;
+
+    /**
+     * @fn DFRobot_CCS811
      * @brief Constructor 
-     * @param Input in Wire address
+     * @param pWire TwoWire
+     * @param deviceAddr iic addr
      */
     DFRobot_CCS811(TwoWire *pWire = &Wire, uint8_t deviceAddr = 0x5A){_pWire = pWire; _deviceAddr = deviceAddr;};
     
-              /**
-               * @brief Constructor
-               * @return Return 0 if initialization succeeds, otherwise return non-zero.
-               */
-    int       begin();
-              /**
-               * @brief Judge if there is data to read 
-               * @return Return 1 if there is, otherwise return 0. 
-               */
-    bool      checkDataReady();
-              /**
-               * @brief Reset sensor, clear all configured data.
-               */
-    void      softReset(),
-              /**
-               * @brief Set environment parameter 
-               * @param temperature Set temperature value, unit: centigrade, range (-40~85℃)
-               * @param humidity    Set humidity value, unit: RH, range (0~100)
-               */
-              setInTempHum(float temperature, float humidity),
-              /**
-               * @brief Measurement parameter configuration 
-               * @param mode:in typedef enum{
-               *              eClosed,      //Idle (Measurements are disabled in this mode)
-               *              eCycle_1s,    //Constant power mode, IAQ measurement every second
-               *              eCycle_10s,   //Pulse heating mode IAQ measurement every 10 seconds
-               *              eCycle_60s,   //Low power pulse heating mode IAQ measurement every 60 seconds
-               *              eCycle_250ms  //Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
-               *          }eCycle_t;
-               * @param thresh:0 for Interrupt mode operates normally; 1 for interrupt mode only asserts the nINT signal (driven low) if the new
-               * @param interrupt:0 for Interrupt generation is disabled; 1 for the nINT signal is asserted (driven low) when a new sample is ready in
-               */
-              setMeasurementMode(eCycle_t mode, uint8_t thresh = 0, uint8_t interrupt = 0),
-              /**
-               * @brief Set interrupt thresholds 
-               * @param lowToMed: interrupt triggered value in range low to middle 
-               * @param medToHigh: interrupt triggered value in range middle to high 
-               */
-              setThresholds(uint16_t lowToMed, uint16_t medToHigh);
-              /**
-               * @brief Get current configured parameter
-               * @return configuration code, needs to be converted into binary code to analyze
-               *         The 2nd: Interrupt mode (if enabled) operates normally,1: Interrupt mode (if enabled) only asserts the nINT signal (driven low) if the new
-               *         The 3rd: Interrupt generation is disabled,1: The nINT signal is asserted (driven low) when a new sample is ready in
-               *         The 4th: 6th: in typedef enum eCycle_t
-               */
-    uint8_t   getMeasurementMode();
+    /**
+     * @fn begin
+     * @brief initialization function
+     * @return initialization status
+     * @retval ERR_OK          initialization success
+     * @retval ERR_DATA_BUS    error in data bus
+     * @retval ERR_IC_VERSION  chip version mismatch
+     */ 
+    int begin();
 
-              /**
-               * @brief Get the current carbon dioxide concentration
-               * @return current carbon dioxide concentration, unit:ppm
-               */
-    uint16_t  getCO2PPM(),
-              /**
-               * @brief Get current TVOC concentration
-               * @return Return current TVOC concentration, unit: ppb
-               */
-              getTVOCPPB();
-    uint16_t  readBaseLine();
-    void      writeBaseLine(uint16_t baseLine);
+    /**
+     * @fn checkDataReady
+     * @brief Judge if there is data to read 
+     * @return  the result of checking
+     * @retval  true   there is
+     * @retval  false  there is no
+     */
+    bool checkDataReady();
+
+    /**
+     * @fn softReset
+     * @brief Reset sensor, clear all configured data.
+     */
+    void softReset();
+
+    /**
+     * @fn setInTempHum
+     * @brief Set environment parameter 
+     * @param temperature Set temperature value, unit: centigrade, range (-40~85℃)
+     * @param humidity    Set humidity value, unit: RH, range (0~100)
+     */
+    void setInTempHum(float temperature, float humidity);
+
+    /**
+     * @fn setMeasurementMode
+     * @brief Measurement parameter configuration 
+     * @param mode   Measurements mode
+     * @n            eClosed       Idle (Measurements are disabled in this mode)
+     * @n            eCycle_1s     Constant power mode, IAQ measurement every second
+     * @n            eCycle_10s    Pulse heating mode IAQ measurement every 10 seconds
+     * @n            eCycle_60s    Low power pulse heating mode IAQ measurement every 60 seconds
+     * @n            eCycle_250ms  Constant power mode, sensor measurement every 250ms 1xx: Reserved modes (For future use)
+     * @param thresh
+     * @n            0             for Interrupt mode operates normally
+     * @n            1             for interrupt mode only asserts the nINT signal (driven low) if the new
+     * @param interrupt
+     * @n            0             for Interrupt generation is disabled
+     * @n            1             for the nINT signal is asserted (driven low) when a new sample is ready in
+     */
+    void setMeasurementMode(eCycle_t mode, uint8_t thresh = 0, uint8_t interrupt = 0);
+
+    /**
+     * @fn setThresholds
+     * @brief Set interrupt thresholds 
+     * @param lowToMed: interrupt triggered value in range low to middle 
+     * @param medToHigh: interrupt triggered value in range middle to high 
+     */
+    void setThresholds(uint16_t lowToMed, uint16_t medToHigh);
+
+    /**
+     * @fn getMeasurementMode
+     * @brief Get current configured parameter
+     * @return configuration code, needs to be converted into binary code to analyze
+     * @n       The 2nd: Interrupt mode (if enabled) operates normally,1: Interrupt mode (if enabled) only asserts the nINT signal (driven low) if the new
+     * @n       The 3rd: Interrupt generation is disabled,1: The nINT signal is asserted (driven low) when a new sample is ready in
+     * @n       The 4th: 6th: in typedef enum eCycle_t
+     */
+    uint8_t getMeasurementMode();
+
+    /**
+     * @fn getCO2PPM
+     * @brief Get the current carbon dioxide concentration
+     * @return current carbon dioxide concentration, unit:ppm
+     */
+    uint16_t getCO2PPM();
+
+    /**
+     * @fn getTVOCPPB
+     * @brief Get current TVOC concentration
+     * @return Return current TVOC concentration, unit: ppb
+     */
+    uint16_t getTVOCPPB();
+
+    /**
+     * @fn readBaseLine
+     * @brief get the current baseline number
+     * @return a Hexadecimal number of the current baseline number
+     */
+    uint16_t readBaseLine();
+
+    /**
+     * @fn writeBaseLine
+     * @brief write a baseline number into register
+     * @param baseLine Hexadecimal number get from baseLine()
+     */
+    void writeBaseLine(uint16_t baseLine);
     
 protected:
 
+    /**
+     * @struct sError_id 
+     * @brief Error id 
+     */
     typedef struct{
-        /*
-         * The CCS811 received an I²C write request addressed to this station but with invalid register address ID
-         */
-        uint8_t sWRITE_REG_INVALID: 1;
-        /*
-         * The CCS811 received an I²C read request to a mailbox ID that is invalid
-         */
-        uint8_t sREAD_REG_INVALID: 1;
-        /*
-         * The CCS811 received an I²C request to write an unsupported mode to MEAS_MODE
-         */
-        uint8_t sMEASMODE_INVALID: 1;
-        /*
-         * The sensor resistance measurement has reached or exceeded the maximum range
-         */
-        uint8_t sMAX_RESISTANCE: 1;
-        /*
-         * The The Heater current in the CCS811 is not in range
-         */
-        uint8_t sHEATER_FAULT: 1;
-        /*
-         * The Heater voltage is not being applied correctly
-         */
-        uint8_t sHEATER_SUPPLY: 1;
+        uint8_t sWRITE_REG_INVALID: 1;/**< The CCS811 received an I²C write request addressed to this station but with invalid register address ID */
+        uint8_t sREAD_REG_INVALID:  1;/**< The CCS811 received an I²C read request to a mailbox ID that is invalid */
+        uint8_t sMEASMODE_INVALID:  1;/**< The CCS811 received an I²C request to write an unsupported mode to MEAS_MODE */
+        uint8_t sMAX_RESISTANCE:    1;/**< The sensor resistance measurement has reached or exceeded the maximum range */
+        uint8_t sHEATER_FAULT:      1;/**< The The Heater current in the CCS811 is not in range */
+        uint8_t sHEATER_SUPPLY:     1;/**< The Heater voltage is not being applied correctly */
     } __attribute__ ((packed))sError_id;
     
+    /**
+     * @struct sMeas_mode 
+     * @brief Measurement mode
+     */
     typedef struct{
-        /* 
-         * ALG_RESULT_DATA crosses one of the thresholds set in the THRESHOLDS register 
-         * by more than the hysteresis value (also in the THRESHOLDS register)
-         */
-        uint8_t sINT_THRESH: 1;
-        /* 
-         * At the end of each measurement cycle (250ms, 1s, 10s, 60s) a flag is set in the
-         * STATUS register regardless of the setting of this bit.
-         */
-        uint8_t sINT_DATARDY: 1;
-        /* 
-         * A new sample is placed in ALG_RESULT_DATA and RAW_DATA registers and the
-         * DATA_READY bit in the STATUS register is set at the defined measurement interval.
-         */
-        uint8_t sDRIVE_MODE: 3;
+        uint8_t sINT_THRESH:  1;/**< ALG_RESULT_DATA crosses one of the thresholds set in the THRESHOLDS register by more than the hysteresis value (also in the THRESHOLDS register) */
+        uint8_t sINT_DATARDY: 1;/**< At the end of each measurement cycle (250ms, 1s, 10s, 60s) a flag is set in the STATUS register regardless of the setting of this bit. */
+        uint8_t sDRIVE_MODE:  3;/**< A new sample is placed in ALG_RESULT_DATA and RAW_DATA registers and the DATA_READY bit in the STATUS register is set at the defined measurement interval. */
     } __attribute__ ((packed))sMeas_mode;
-    
+
+    /**
+     * @struct sStatus 
+     * @brief Sensor Status 
+     */
     typedef struct{
-        /* 
-         * This bit is cleared by reading ERROR_ID
-         * It is not sufficient to read the ERROR field of ALG_RESULT_DATA and STATUS
-         */
-        uint8_t sERROR: 1;
-        /* 
-         * ALG_RESULT_DATA is read on the I²C interface
-         */
-        uint8_t sDATA_READY: 1;
-        uint8_t sAPP_VALID: 1;
-        /* 
-         * After issuing a VERIFY command the application software must wait 70ms before 
-         * issuing any transactions to CCS811 over the I²C interface
-         */
-        uint8_t sAPP_VERIFY: 1;
-        /* 
-         * After issuing the ERASE command the application software must wait 500ms 
-         * before issuing any transactions to the CCS811 over the I2C interface.
-         */
-        uint8_t sAPP_ERASE: 1;
-        uint8_t sFW_MODE: 1;
+        uint8_t sERROR:      1;/**< This bit is cleared by reading ERROR_ID.It is not sufficient to read the ERROR field of ALG_RESULT_DATA and STATUS */
+        uint8_t sDATA_READY: 1;/**< ALG_RESULT_DATA is read on the I²C interface */
+        uint8_t sAPP_VALID:  1;
+        uint8_t sAPP_VERIFY: 1;/**< After issuing a VERIFY command the application software must wait 70ms before issuing any transactions to CCS811 over the I²C interface */
+        uint8_t sAPP_ERASE:  1;/**< After issuing the ERASE command the application software must wait 500ms before issuing any transactions to the CCS811 over the I2C interface. */
+        uint8_t sFW_MODE:    1;
     } __attribute__ ((packed))sStatus;
-    
-    
-    void getData(void);
-    
-    void writeConfig();
-         
-    virtual void writeReg(uint8_t reg, const void* pBuf, size_t size);
-    virtual uint8_t readReg(uint8_t reg, const void* pBuf, size_t size);
-    
-    
+
+    /**
+     * @fn writeReg
+     * @brief Write register function 
+     * @param reg  register address 8bits
+     * @param pBuf Storage cache of the data to be written into 
+     * @param size Length of the data to be written into 
+     */
+    void writeReg(uint8_t reg, const void* pBuf, size_t size);
+
+    /**
+     * @fn readReg
+     * @brief Read register function 
+     * @param reg  register address 8bits
+     * @param pBuf Storage cache of the data to be read
+     * @param size Length of the data to be read
+     * @return Return the actually read length, fails to read if return 0.  
+     */
+    uint8_t readReg(uint8_t reg, const void* pBuf, size_t size);
 
 private:
     TwoWire *_pWire;

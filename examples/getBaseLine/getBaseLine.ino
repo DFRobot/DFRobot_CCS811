@@ -2,13 +2,12 @@
  * @file getBaseLine.ino
  * @brief Put the module in clear air and work a few minutes, wait for baseline doing not change 
  * @n Experiment phenomenon: get
- *
  * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
+ * @license     The MIT License (MIT)
  * @author [LuoYufeng](yufeng.luo@dfrobot.com)
+ * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V0.1
  * @date  2019-07-19
- * @get from https://www.dfrobot.com
  * @url https://github.com/DFRobot/DFRobot_CCS811
  */
 #include "DFRobot_CCS811.h"
