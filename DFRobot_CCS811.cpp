@@ -7,7 +7,6 @@
  * @maintainer  [fary](feng.yang@dfrobot.com)
  * @version  V1.0
  * @date  2019-07-13
- * @get from https://www.dfrobot.com
  * @url https://github.com/DFRobot/DFRobot_CCS811
  */
 
