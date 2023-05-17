@@ -2,9 +2,9 @@
 
 - [中文版](./README_CN.md)
 
-This sensor is used to measure the concentration of carbon dioxide and TVOC(TotalVolatileOrganicCompounds) via IIC within measurement range 400-8000ppm(parts per million) for the former and 0-1100ppb(parts per billion) for the latter. It features small size, low power consumption, high accuracy and short pre-heat time. Besides, this sensor provides grade 1 MSL(moisture sensitivity level), which makes the sensor suitable for all kinds of moist operating conditions. Meanwhile, users can input environment parameter to calibrate the output data. <br>
+This sensor is used to measure the concentration of carbon dioxide and TVOC (TotalVolatileOrganicCompounds) via IIC within measurement range 400-8000ppm (parts per million) for the former and 0-1100ppb (parts per billion) for the latter. It features small size, low power consumption, high accuracy and short pre-heat time. Besides, this sensor provides grade 1 MSL (moisture sensitivity level), which makes the sensor suitable for all kinds of moist operating conditions. Meanwhile, users can input environment parameter to calibrate the output data. <br>
 
-Carbon dioxide concentration(ppm)  | Impact on human-beings
+Carbon dioxide concentration (ppm)  | Impact on human-beings
 ------------------ | ---------
 more than 5000        |      toxic 
 2500-5000        |      unhealthy to human body
@@ -28,7 +28,7 @@ more than 6000       |      headache, neurological problems
 <img src="./resources/images/SEN0318-CONNECT.jpg">
 <br>
 
-## Product Link（https://www.dfrobot.com/product-1981.html）
+## Product Link（https://www.dfrobot.com/product-1981.html)
     SKU：SEN0318
 
 
@@ -157,7 +157,7 @@ There are two ways to use the library:
 
 ## Compatibility
 
-MCU                | Work Well    | Work Wrong   | Untested    | Remarks
+MCU                | Works Well   | Works Wrong  | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
 Arduino uno        |      √       |              |             | 
 Mega2560        |      √       |              |             | 
